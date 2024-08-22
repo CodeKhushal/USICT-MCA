@@ -1,1 +1,1 @@
-# USICTCode
+# USICT-MCA
