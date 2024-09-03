@@ -66,6 +66,13 @@ void deleteAtBeginning(int arr[])
 
 void deleteAtIndex(int arr[], int index)
 {
+    for (int i = index; i < aSize - 1; i++)
+    {
+        arr[i] = arr[i + 1];
+    }
+    aSize--;
+    cout << endl;
+    arrayTraversal(arr);
 }
 
 void deleteAtEnd(int arr[])
@@ -92,8 +99,45 @@ int searchByElement(int arr[], int element)
     return -1;
 }
 
+int binarySearch(int arr[], int low, int high, int number)
+{
+    if (low > high)
+    {
+        return -1;
+    }
+
+    int mid = (low + high) / 2;
+
+    if (number == arr[mid])
+    {
+        return mid;
+    }
+
+    else if (number < arr[mid])
+    {
+        return binarySearch(arr, low, mid - 1, number);
+    }
+
+    else
+    {
+        return binarySearch(arr, mid + 1, high, number);
+    }
+}
+
 void sort(int arr[])
 {
+    for (int i = 1; i < aSize; ++i)
+    {
+        int key = arr[i];
+        int j = i - 1;
+        while (j >= 0 && arr[j] > key)
+        {
+            arr[j + 1] = arr[j];
+            j = j - 1;
+        }
+        arr[j + 1] = key;
+        // arrayTraversal(arr);
+    }
 }
 
 void sortDescending(int arr[])
@@ -235,7 +279,7 @@ int main()
             break;
 
         case 4:
-            cout << "Want to search by\n1. Index\n2. Element\n";
+            cout << "Want to search by\n1. Index\n2. Element\n3. Binary Search\n";
             cout << "\nOption: ";
             cin >> subOption;
             cout << endl;
@@ -264,6 +308,18 @@ int main()
                 }
                 cout << "\nElement found at index: " << searchByElement(arr, element) << "\n\n";
             }
+            if (subOption == 3)
+            {
+                int element;
+                cout << "Enter the element you want to search in the array using binary search: ";
+                cin >> element;
+                if (binarySearch(arr, 0, aSize, element) == -1)
+                {
+                    cout << "\nElement not found!\n\n";
+                    break;
+                }
+                cout << "\nElement found at index: " << binarySearch(arr, 0, aSize, element) << "\n\n";
+            }
             break;
 
         case 5:
@@ -273,7 +329,10 @@ int main()
             cout << endl;
             if (subOption == 1)
             {
+                cout << "Sorting the array....\n";
                 sort(arr);
+                cout << "Array in now sorted!\n";
+                arrayTraversal(arr);
             }
             if (subOption == 2)
             {
