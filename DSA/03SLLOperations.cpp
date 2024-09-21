@@ -1,3 +1,6 @@
+// Implement insertion (at the beginning, at specified location, at the end) 
+// and deletion (at the beginning, at specified location, at the end) on single 
+// linked list and count the number of nodes & reverse the single linked list. 
 #include <iostream>
 #include <malloc.h>
 using namespace std;
@@ -59,9 +62,9 @@ int countList()
 void insertAtBeginning(int d)
 {
     NODE *temp = createNode(d);
-    temp->data = d;
     temp->next = head;
     head = temp;
+    cout << "\n\t[Element Inserted!]\n";
     displayList();
 }
 
@@ -76,6 +79,14 @@ void insertAtPos(int d, int pos)
     if (temp == NULL)
     {
         cout << "\n\t[Location not found!]\n\n";
+        return;
+    }
+    if (temp->next == NULL)
+    {
+        dataNode->next = NULL;
+        temp->next = dataNode;
+        cout << "\n\t[Element Inserted!]\n";
+        displayList();
         return;
     }
     dataNode->next = temp->next;
@@ -94,7 +105,6 @@ void insertAtEnd(int d)
     else
     {
         NODE *temp = createNode(d);
-        temp->data = d;
         NODE *p = head;
         while (p->next != NULL)
         {
@@ -102,17 +112,13 @@ void insertAtEnd(int d)
         }
         p->next = temp;
         temp->next = NULL;
+        cout << "\n\t[Element Inserted!]\n";
         displayList();
     }
 }
 
 void deleteAtBeg()
 {
-    if (isListEmpty())
-    {
-        cout << "\t[List is empty!]" << endl;
-        return;
-    }
     NODE *temp = head;
     head = head->next;
     delete (temp);
@@ -122,12 +128,6 @@ void deleteAtBeg()
 
 void deleteAtLoc(int loc)
 {
-    if (isListEmpty())
-    {
-        cout << "\t[List is empty!]" << endl;
-        return;
-    }
-
     NODE *temp1 = head;
 
     // If the node to delete is the head node
@@ -165,10 +165,6 @@ void deleteAtLoc(int loc)
 
 void deleteAtEnd()
 {
-    if (isListEmpty())
-    {
-        cout << "\t[List is empty!]" << endl;
-    }
     NODE *temp = head;
     while (temp->next->next != NULL)
     {
@@ -215,6 +211,7 @@ void reverseList()
 // insert(beg, index, end), delete(beg, index, end), traverse, count the number of nodes, reverse the list
 int main()
 {
+    cout<<"\n\t[Singly Linked List]\n\n";
     bool flag = true;
     int option = 0;
     int subOption = 0;
@@ -226,7 +223,7 @@ int main()
 
         cout << "Enter the operation you want to do on the list: \n\n";
         cout << "0. Exit\n";
-        cout << "1. Create List\n";
+        cout << "1. Create Singly Linked List\n";
         cout << "2. Insert\n";
         cout << "3. Delete\n";
         cout << "4. Traverse\n";

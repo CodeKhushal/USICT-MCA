@@ -1,3 +1,6 @@
+// Implement operations (traverse, insert (beg, loc, end), delete (beg, loc, 
+// end), linear search, binary search using recursion, insertion sort) on an 
+// array.
 #include <iostream>
 #include <chrono>
 #include <thread>

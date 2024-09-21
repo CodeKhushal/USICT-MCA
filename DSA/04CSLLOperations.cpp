@@ -56,7 +56,7 @@ int takeSubInput(string x)
 {
     int subOption = 0;
     cout << "1. " << x << " element at the beginning of the list.\n";
-    cout << "2. " << x << " element at an index of the list.\n";
+    cout << "2. " << x << " element at an position of the list.\n";
     cout << "3. " << x << " element at the end of the list.\n";
     cout << "\nOption: ";
     cin >> subOption;
@@ -215,6 +215,7 @@ void deleteAtEnd()
 
 int main()
 {
+    cout << "\n\t[Circular Singly Linked List]\n\n";
     bool flag = true;
     int option = 0;
     int subOption = 0;
@@ -226,7 +227,7 @@ int main()
 
         cout << "Enter the operation you want to do on the list: \n\n";
         cout << "0. Exit\n";
-        cout << "1. Create Circular List\n";
+        cout << "1. Create Circular Singly Linked List\n";
         cout << "2. Insert\n";
         cout << "3. Delete\n";
         cout << "4. Traverse\n";
@@ -248,6 +249,14 @@ int main()
             if (isListEmpty())
             {
                 cout << "\t[List size is 0. Cannot delete an element!]\n\n";
+                continue;
+            }
+            if (isOnlyHeadPresent())
+            {
+                delete head;
+                head = NULL;
+                cout << "\n\t[Element Deleted!]\n";
+                displayList();
                 continue;
             }
             subOption = takeSubInput("Delete");
