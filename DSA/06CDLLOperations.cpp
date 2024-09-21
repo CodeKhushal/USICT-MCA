@@ -1,6 +1,6 @@
 // Implement insertion (at the beginning, at specified location, at the end)
 // and deletion (at the beginning, at specified location, at the end) on
-// circular single linked list.
+// circular double linked list.
 
 #include <iostream>
 #include <malloc.h>
@@ -9,6 +9,7 @@ using namespace std;
 struct NODE
 {
     int data;
+    NODE *prev;
     NODE *next;
 } *head = NULL;
 
@@ -43,10 +44,32 @@ void displayList()
         NODE *temp = head;
         do
         {
-            cout << temp->data << " -> ";
+            cout << temp->data << " <-> ";
             temp = temp->next;
         } while (temp != head);
         cout << head->data << "[Head]";
+    }
+    cout << endl
+         << endl;
+}
+
+void displayReverse()
+{
+    if (isListEmpty())
+    {
+        cout << "\n\t[Nothing to print!]\n\n";
+        return;
+    }
+    else
+    {
+        cout << "\n\tList: ";
+        NODE *p = head->prev;
+        do
+        {
+            cout << p->data << " <-> ";
+            p = p->prev;
+        } while (p != head->prev);
+        cout << head->prev->data << "[Last]";
     }
     cout << endl
          << endl;
@@ -70,12 +93,9 @@ int takeSubInput(string x)
 void insertAtBeginning(int d)
 {
     NODE *newNode = createNode(d);
-    NODE *temp = head;
-    while (temp->next != head)
-    {
-        temp = temp->next;
-    }
-    temp->next = newNode;
+    newNode->prev = head->prev;
+    head->prev->next = newNode;
+    head->prev = newNode;
     newNode->next = head;
     head = newNode;
     cout << "\n\t[Element Inserted!]\n";
@@ -92,9 +112,11 @@ void insertAtPos(int d, int loc)
         if (temp->data == loc)
         {
             newNode->next = temp->next;
+            newNode->prev = temp;
+            temp->next->prev = newNode;
             temp->next = newNode;
-            if (temp == head)
-                head = newNode;
+            if (temp == head->prev)
+                head->prev = newNode;
             cout << "\n\t[Element Inserted!]\n";
             displayList();
             return;
@@ -108,13 +130,10 @@ void insertAtPos(int d, int loc)
 void insertAtEnd(int d)
 {
     NODE *newNode = createNode(d);
-    NODE *temp = head;
-    while (temp->next != head)
-    {
-        temp = temp->next;
-    }
-    temp->next = newNode;
+    head->prev->next = newNode;
     newNode->next = head;
+    newNode->prev = head->prev;
+    head->prev = newNode;
     cout << "\n\t[Element Inserted!]\n";
     displayList();
 }
@@ -129,13 +148,10 @@ void deleteAtBeg()
         return;
     }
     NODE *temp = head;
-    while (temp->next != head)
-    {
-        temp = temp->next;
-    }
-    temp->next = head->next;
-    delete head;
-    head = temp->next;
+    head = head->next;
+    head->prev = temp->prev;
+    temp->prev->next = head;
+    delete temp;
     cout << "\n\t[Element Deleted!]\n";
     displayList();
 }
@@ -149,44 +165,32 @@ void deleteAtLoc(int loc)
     {
         if (isOnlyHeadPresent())
         {
-            delete head;
             head = NULL;
             cout << "\n\t[Element Deleted!]\n";
             displayList();
             return;
         }
 
-        NODE *temp = head;
-        while (temp->next != head)
-        {
-            temp = temp->next;
-        }
-        temp->next = head->next;
-        temp1 = head;
-        head = head->next;
-        delete temp1;
-        cout << "\n\t[Element Deleted!]\n";
-        displayList();
+        deleteAtBeg();
         return;
     }
 
-    NODE *temp = NULL;
     // Traverse the list to find the node with 'loc'
     while (temp1->next != head && temp1->data != loc)
     {
-        temp = temp1;
         temp1 = temp1->next;
     }
 
     // If location not found
-    if (temp1->next == head)
+    if (temp1 == head)
     {
         cout << "\n\t[Location not found!]\n\n";
         return;
     }
 
     // Unlink the node to be deleted
-    temp->next = temp1->next;
+    temp1->prev->next = temp1->next;
+    temp1->next->prev = temp1->prev;
     delete temp1;
 
     cout << "\n\t[Element Deleted!]\n";
@@ -202,21 +206,17 @@ void deleteAtEnd()
         displayList();
         return;
     }
-    NODE *temp = head;
-    while (temp->next->next != head)
-    {
-        temp = temp->next;
-    }
-    NODE *temp1 = temp->next;
-    temp->next = head;
-    delete temp1;
+    NODE *temp = head->prev;
+    temp->prev->next = head;
+    head->prev = temp->prev;
+    delete temp;
     cout << "\n\t[Element Deleted!]\n";
     displayList();
 }
 
 int main()
 {
-    cout << "\n\t[Circular Singly Linked List]\n\n";
+    cout << "\n\t[Circular Doubly Linked List]\n\n";
     bool flag = true;
     int option = 0;
     int subOption = 0;
@@ -228,10 +228,11 @@ int main()
 
         cout << "Enter the operation you want to do on the list: \n\n";
         cout << "0. Exit\n";
-        cout << "1. Create Circular Singly Linked List\n";
+        cout << "1. Create Circular Doubly Linked List\n";
         cout << "2. Insert\n";
         cout << "3. Delete\n";
         cout << "4. Traverse\n";
+        cout << "5. Reverse Traverse\n";
         cout << "\nOption: ";
         cin >> option;
         cout << endl;
@@ -283,6 +284,7 @@ int main()
             cin >> d;
             head = createNode(d);
             head->next = head;
+            head->prev = head;
             cout << "\n\t[List Created!]\n\n";
             displayList();
             break;
@@ -353,6 +355,10 @@ int main()
 
         case 4:
             displayList();
+            break;
+
+        case 5:
+            displayReverse();
             break;
 
         default:

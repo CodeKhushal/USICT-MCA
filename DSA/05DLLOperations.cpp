@@ -1,7 +1,6 @@
 // Implement insertion (at the beginning, at specified location, at the end)
-// and deletion (at the beginning, at specified location, at the end) on
-// circular single linked list.
-
+// and deletion (at the beginning, at specified location, at the end) on double
+// linked list.
 #include <iostream>
 #include <malloc.h>
 using namespace std;
@@ -9,6 +8,7 @@ using namespace std;
 struct NODE
 {
     int data;
+    NODE *prev;
     NODE *next;
 } *head = NULL;
 
@@ -25,28 +25,51 @@ bool isListEmpty()
     return head == NULL;
 }
 
-bool isOnlyHeadPresent()
-{
-    return head->next == head;
-}
-
 void displayList()
 {
     if (isListEmpty())
     {
-        cout << "\n\t[List is Empty, Nothing to print!]\n\n";
+        cout << "\n\t[Nothing to print!]\n\n";
         return;
     }
     else
     {
         cout << "\n\tList: ";
-        NODE *temp = head;
-        do
+        NODE *p = head;
+        while (p != NULL)
         {
-            cout << temp->data << " -> ";
-            temp = temp->next;
-        } while (temp != head);
-        cout << head->data << "[Head]";
+            cout << p->data;
+            p = p->next;
+            if (p != NULL)
+                cout << " <-> ";
+        }
+    }
+    cout << endl
+         << endl;
+}
+
+void displayReverse()
+{
+    if (isListEmpty())
+    {
+        cout << "\n\t[Nothing to print!]\n\n";
+        return;
+    }
+    else
+    {
+        cout << "\n\tList: ";
+        NODE *p = head;
+        while (p->next != NULL)
+        {
+            p = p->next;
+        }
+        while (p != NULL)
+        {
+            cout << p->data;
+            p = p->prev;
+            if (p != NULL)
+                cout << " <-> ";
+        }
     }
     cout << endl
          << endl;
@@ -56,7 +79,7 @@ int takeSubInput(string x)
 {
     int subOption = 0;
     cout << "1. " << x << " element at the beginning of the list.\n";
-    cout << "2. " << x << " element at an position of the list.\n";
+    cout << "2. " << x << " element at a location of the list.\n";
     cout << "3. " << x << " element at the end of the list.\n";
     cout << "\nOption: ";
     cin >> subOption;
@@ -69,74 +92,75 @@ int takeSubInput(string x)
 
 void insertAtBeginning(int d)
 {
-    NODE *newNode = createNode(d);
-    NODE *temp = head;
-    while (temp->next != head)
-    {
-        temp = temp->next;
-    }
-    temp->next = newNode;
-    newNode->next = head;
-    head = newNode;
+    NODE *temp = createNode(d);
+    temp->data = d;
+    temp->prev = NULL;
+    temp->next = head;
+    head->prev = temp;
+    head = temp;
     cout << "\n\t[Element Inserted!]\n";
     displayList();
 }
 
-void insertAtPos(int d, int loc)
+void insertAtPos(int d, int pos)
 {
-    NODE *newNode = createNode(d);
-    NODE *temp = head->next;
-
-    do
+    NODE *dataNode = createNode(d);
+    NODE *temp = head;
+    while (temp != NULL && pos != temp->data)
     {
-        if (temp->data == loc)
-        {
-            newNode->next = temp->next;
-            temp->next = newNode;
-            if (temp == head)
-                head = newNode;
-            cout << "\n\t[Element Inserted!]\n";
-            displayList();
-            return;
-        }
         temp = temp->next;
-    } while (temp != head->next);
-    cout << "\n\t[Location not found!]\n\n";
-    return;
+    }
+    if (temp == NULL)
+    {
+        cout << "\n\t[Location not found!]\n\n";
+        return;
+    }
+    if (temp->next == NULL)
+    {
+        dataNode->next = NULL;
+        temp->next = dataNode;
+        dataNode->prev = temp;
+        cout << "\n\t[Element Inserted!]\n";
+        displayList();
+        return;
+    }
+    dataNode->next = temp->next;
+    temp->next->prev = dataNode;
+    dataNode->prev = temp;
+    temp->next = dataNode;
+    cout << "\n\t[Element Inserted!]\n";
+    displayList();
 }
 
 void insertAtEnd(int d)
 {
-    NODE *newNode = createNode(d);
-    NODE *temp = head;
-    while (temp->next != head)
+    if (isListEmpty())
     {
-        temp = temp->next;
+        insertAtBeginning(d);
+        return;
     }
-    temp->next = newNode;
-    newNode->next = head;
-    cout << "\n\t[Element Inserted!]\n";
-    displayList();
+    else
+    {
+        NODE *temp = createNode(d);
+        NODE *p = head;
+        while (p->next != NULL)
+        {
+            p = p->next;
+        }
+        p->next = temp;
+        temp->next = NULL;
+        temp->prev = p;
+        displayList();
+    }
 }
 
 void deleteAtBeg()
 {
-    if (isOnlyHeadPresent())
-    {
-        head = NULL;
-        cout << "\n\t[Element Deleted!]\n";
-        displayList();
-        return;
-    }
     NODE *temp = head;
-    while (temp->next != head)
-    {
-        temp = temp->next;
-    }
-    temp->next = head->next;
-    delete head;
-    head = temp->next;
-    cout << "\n\t[Element Deleted!]\n";
+    head = head->next;
+    delete (temp);
+    head->prev = NULL;
+    cout << "\n\t[Element at the beginning deleted!]\n";
     displayList();
 }
 
@@ -147,46 +171,30 @@ void deleteAtLoc(int loc)
     // If the node to delete is the head node
     if (head->data == loc)
     {
-        if (isOnlyHeadPresent())
-        {
-            delete head;
-            head = NULL;
-            cout << "\n\t[Element Deleted!]\n";
-            displayList();
-            return;
-        }
-
-        NODE *temp = head;
-        while (temp->next != head)
-        {
-            temp = temp->next;
-        }
-        temp->next = head->next;
-        temp1 = head;
         head = head->next;
         delete temp1;
+        head->prev = NULL;
         cout << "\n\t[Element Deleted!]\n";
         displayList();
         return;
     }
 
-    NODE *temp = NULL;
     // Traverse the list to find the node with 'loc'
-    while (temp1->next != head && temp1->data != loc)
+    while (temp1 != NULL && temp1->data != loc)
     {
-        temp = temp1;
         temp1 = temp1->next;
     }
 
     // If location not found
-    if (temp1->next == head)
+    if (temp1 == NULL)
     {
         cout << "\n\t[Location not found!]\n\n";
         return;
     }
 
     // Unlink the node to be deleted
-    temp->next = temp1->next;
+    temp1->prev->next = temp1->next;
+    temp1->next->prev = temp1->prev;
     delete temp1;
 
     cout << "\n\t[Element Deleted!]\n";
@@ -195,28 +203,20 @@ void deleteAtLoc(int loc)
 
 void deleteAtEnd()
 {
-    if (isOnlyHeadPresent())
-    {
-        head = NULL;
-        cout << "\n\t[Element Deleted!]\n";
-        displayList();
-        return;
-    }
     NODE *temp = head;
-    while (temp->next->next != head)
+    while (temp->next != NULL)
     {
         temp = temp->next;
     }
-    NODE *temp1 = temp->next;
-    temp->next = head;
-    delete temp1;
-    cout << "\n\t[Element Deleted!]\n";
+    temp->prev->next = NULL;
+    delete (temp);
+    cout << "\t[Element at the end deleted!]\n\n";
     displayList();
 }
 
 int main()
 {
-    cout << "\n\t[Circular Singly Linked List]\n\n";
+    cout<<"\n\t[Doubly Linked List]\n\n";
     bool flag = true;
     int option = 0;
     int subOption = 0;
@@ -228,10 +228,11 @@ int main()
 
         cout << "Enter the operation you want to do on the list: \n\n";
         cout << "0. Exit\n";
-        cout << "1. Create Circular Singly Linked List\n";
+        cout << "1. Create Doubly Linked List\n";
         cout << "2. Insert\n";
         cout << "3. Delete\n";
         cout << "4. Traverse\n";
+        cout << "5. Reverse Traverse\n";
         cout << "\nOption: ";
         cin >> option;
         cout << endl;
@@ -252,7 +253,7 @@ int main()
                 cout << "\t[List size is 0. Cannot delete an element!]\n\n";
                 continue;
             }
-            if (isOnlyHeadPresent())
+            if (head->next == NULL)
             {
                 delete head;
                 head = NULL;
@@ -282,7 +283,8 @@ int main()
             cout << "Enter the 1st value: ";
             cin >> d;
             head = createNode(d);
-            head->next = head;
+            head->prev = NULL;
+            head->next = NULL;
             cout << "\n\t[List Created!]\n\n";
             displayList();
             break;
@@ -304,7 +306,7 @@ int main()
                 else if (subOption == 2)
                 {
                     int d, pos;
-                    cout << "Enter the position at which data to be inserted: ";
+                    cout << "Enter the location at which data to be inserted: ";
                     cin >> pos;
                     cout << "Enter the value to be inserted: ";
                     cin >> d;
@@ -353,6 +355,10 @@ int main()
 
         case 4:
             displayList();
+            break;
+
+        case 5:
+            displayReverse();
             break;
 
         default:
