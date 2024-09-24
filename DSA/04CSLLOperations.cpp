@@ -156,30 +156,20 @@ void deleteAtLoc(int loc)
             return;
         }
 
-        NODE *temp = head;
-        while (temp->next != head)
-        {
-            temp = temp->next;
-        }
-        temp->next = head->next;
-        temp1 = head;
-        head = head->next;
-        delete temp1;
-        cout << "\n\t[Element Deleted!]\n";
-        displayList();
+        deleteAtBeg();
         return;
     }
 
     NODE *temp = NULL;
     // Traverse the list to find the node with 'loc'
-    while (temp1->next != head && temp1->data != loc)
+    do
     {
         temp = temp1;
         temp1 = temp1->next;
-    }
+    } while (temp1 != head && temp1->data != loc);
 
     // If location not found
-    if (temp1->next == head)
+    if (temp1 == head)
     {
         cout << "\n\t[Location not found!]\n\n";
         return;

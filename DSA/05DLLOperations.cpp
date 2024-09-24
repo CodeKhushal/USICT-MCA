@@ -194,7 +194,8 @@ void deleteAtLoc(int loc)
 
     // Unlink the node to be deleted
     temp1->prev->next = temp1->next;
-    temp1->next->prev = temp1->prev;
+    if (temp1->next != NULL)
+        temp1->next->prev = temp1->prev;
     delete temp1;
 
     cout << "\n\t[Element Deleted!]\n";
@@ -216,7 +217,7 @@ void deleteAtEnd()
 
 int main()
 {
-    cout<<"\n\t[Doubly Linked List]\n\n";
+    cout << "\n\t[Doubly Linked List]\n\n";
     bool flag = true;
     int option = 0;
     int subOption = 0;
