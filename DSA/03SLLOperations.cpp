@@ -1,6 +1,6 @@
-// Implement insertion (at the beginning, at specified location, at the end) 
-// and deletion (at the beginning, at specified location, at the end) on single 
-// linked list and count the number of nodes & reverse the single linked list. 
+// Implement insertion (at the beginning, at specified location, at the end)
+// and deletion (at the beginning, at specified location, at the end) on single
+// linked list and count the number of nodes & reverse the single linked list.
 #include <iostream>
 #include <malloc.h>
 using namespace std;
@@ -208,10 +208,10 @@ void reverseList()
     cout << "\t[List is reversed!]\n\n";
     displayList();
 }
-// insert(beg, index, end), delete(beg, index, end), traverse, count the number of nodes, reverse the list
+
 int main()
 {
-    cout<<"\n\t[Singly Linked List]\n\n";
+    cout << "\n\t[Singly Linked List]\n\n";
     bool flag = true;
     int option = 0;
     int subOption = 0;
