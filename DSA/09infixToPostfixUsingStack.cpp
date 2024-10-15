@@ -110,7 +110,7 @@ bool isNumericPostfix()
     {
         if (isalpha(postfix[i]))
         {
-            return false; // if any alphabet is found, return false
+            return false;
         }
     }
     return true;
@@ -124,14 +124,18 @@ int evaluatePostfix()
     {
         char ch = postfix[i];
 
-        // If the character is a digit, push it onto the stack
-        if (isdigit(ch))
+        if (isalpha(ch))
         {
-            push(ch - '0'); // Convert char digit to integer and push
+            cout << "\tEnter the value of " << ch << ": ";
+            cin >> ch;
+            push(ch - '0');
+        }
+        else if (isdigit(ch))
+        {
+            push(ch - '0');
         }
         else
         {
-            // It's an operator, pop the top two elements
             int operand2 = pop();
             int operand1 = pop();
 
@@ -162,7 +166,6 @@ int evaluatePostfix()
         }
     }
 
-    // The final result is the top element of the stack
     return pop();
 }
 
@@ -177,21 +180,14 @@ int main()
         infixToPostfix();
         cout << "\n\tPostfix expression: " << postfix << endl;
 
-        if (isNumericPostfix())
+        int result = evaluatePostfix();
+        if (tos != -1)
         {
-            int result = evaluatePostfix();
-            if (tos != -1)
-            {
-                cout << "\n\t[Error in expression evaluation!]" << endl;
-            }
-            else
-            {
-                cout << "\n\tResult of the expression: " << result << endl;
-            }
+            cout << "\n\t[Error in expression evaluation!]" << endl;
         }
         else
         {
-            cout << "\n\t[Expression is not in numeric form, cannot evaluate!]" << endl;
+            cout << "\n\tResult of the expression: " << result << endl;
         }
 
         cout << "\n\n\tWant to continue (y/n)? ";
