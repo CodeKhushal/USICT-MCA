@@ -1,3 +1,6 @@
+// Implement the conversion of infix notation to postfix notation and 
+// evaluation of postfix notation using stacks. 
+
 #include <iostream>
 #include <cstring>
 #include <cmath>
@@ -55,7 +58,7 @@ void infixToPostfix()
     char next;
     tos = -1;
     push('$');
-
+    bool flag = false;
     int len = strlen(infix);
 
     for (int i = 0; i < len; i++)
@@ -64,6 +67,7 @@ void infixToPostfix()
 
         if (ch == '(')
         {
+            flag = true;
             push(ch);
         }
         else if (ch == ')')
@@ -102,18 +106,6 @@ void infixToPostfix()
         postfix[p++] = next;
     }
     postfix[p] = '\0';
-}
-
-bool isNumericPostfix()
-{
-    for (int i = 0; postfix[i] != '\0'; i++)
-    {
-        if (isalpha(postfix[i]))
-        {
-            return false;
-        }
-    }
-    return true;
 }
 
 int evaluatePostfix()

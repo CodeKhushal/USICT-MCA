@@ -1,3 +1,6 @@
+// Implement operations (push, pop) on a stack using arrays. Check the 
+// status of the stack whether there is underflow or overflow. 
+
 #include <iostream>
 using namespace std;
 
@@ -35,11 +38,8 @@ void display(Stack &s)
     else
     {
         cout << "\n\tStack: ";
-        for (int i = s.top; i >= 0; i--)
-        {
-            cout << s.arr[i] << " ";
-        }
-        cout << endl;
+
+        cout << s.arr[s.top];
     }
 }
 
@@ -79,7 +79,7 @@ void stackMenu(Stack &s)
         cout << "0. Exit\n";
         cout << "1. Push\n";
         cout << "2. Pop\n";
-        cout << "3. Display Stack\n";
+        cout << "3. Peek\n";
         cout << "Enter your choice: ";
         cin >> choice;
 
