@@ -18,19 +18,19 @@ struct Queue
 
 bool isEmptyQueue(Queue *q)
 {
-    return q->front == nullptr;
+    return q->front == NULL;
 }
 
 void displayQueue(Queue *q)
 {
-    if (q->front == nullptr)
+    if (q->front == NULL)
     {
         cout << "\n\t[Queue is empty!]" << endl;
         return;
     }
     cout << "\n\tQueue elements: ";
     QueueNode *temp = q->front;
-    while (temp != nullptr)
+    while (temp != NULL)
     {
         cout << temp->data << " ";
         temp = temp->next;
@@ -40,15 +40,15 @@ void displayQueue(Queue *q)
 
 void initQueue(Queue *q)
 {
-    q->front = q->rear = nullptr;
+    q->front = q->rear = NULL;
 }
 
 void enqueue(Queue *q, int value)
 {
     QueueNode *newNode = new QueueNode();
     newNode->data = value;
-    newNode->next = nullptr;
-    if (q->rear == nullptr)
+    newNode->next = NULL;
+    if (q->rear == NULL)
     {
         q->front = q->rear = newNode;
     }
@@ -62,16 +62,16 @@ void enqueue(Queue *q, int value)
 
 void dequeue(Queue *q)
 {
-    if (q->front == nullptr)
+    if (q->front == NULL)
     {
         cout << "\n\t[Queue underflow. Nothing to dequeue!]" << endl;
         return;
     }
     QueueNode *temp = q->front;
     q->front = q->front->next;
-    if (q->front == nullptr)
+    if (q->front == NULL)
     {
-        q->rear = nullptr;
+        q->rear = NULL;
     }
     cout << "\n\tDequeued " << temp->data << " from the queue!" << endl;
     delete temp;

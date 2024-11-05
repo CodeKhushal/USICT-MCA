@@ -1,3 +1,5 @@
+//  Implement circular queue using arrays and linked list.
+
 #include <iostream>
 #include "11cirQUsingArray.h"
 #include "11cirQUsingLinkedList.h"
@@ -49,7 +51,8 @@ int main()
             cout << "Exiting...\n\n";
             break;
         case 1:
-            if(isFull(arrayQueue)){
+            if (isFull(arrayQueue))
+            {
                 cout << "\n\t[Queue is full!]\n";
                 break;
             }

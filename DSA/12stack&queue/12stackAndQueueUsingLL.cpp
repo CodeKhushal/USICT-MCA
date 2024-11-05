@@ -1,3 +1,5 @@
+//  Implement stacks and queues using linked list.
+
 #include <iostream>
 #include "12stack.h"
 #include "12queue.h"

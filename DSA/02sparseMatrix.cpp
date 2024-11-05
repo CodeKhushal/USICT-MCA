@@ -2,18 +2,6 @@
 #include <iostream>
 using namespace std;
 
-// void displayMatrix(int arr[][50], int rows, int columns)
-// {
-//     for (int i = 0; i < rows; i++)
-//     {
-//         for (int j = 0; j < columns; j++)
-//         {
-//             cout << arr[i][j] << " ";
-//         }
-//         cout << endl;
-//     }
-// }
-
 int main()
 {
     int matrix[50][50], sparse[100][3];
@@ -36,7 +24,7 @@ int main()
     }
     cout << "\nNumber of non-zero elements in the matrix: " << nzero << endl;
     cout << "\nMatrix: " << endl;
-    // displayMatrix(matrix, mr, mc);
+
     for (int i = 0; i < mr; i++)
     {
         for (int j = 0; j < mc; j++)
@@ -70,8 +58,8 @@ int main()
             }
         }
     }
+    
     cout << "\nSparse Matrix is:\n";
-    // displayMatrix(sparse, sr,3);
     for (int i = 0; i < sr; i++)
     {
         for (int j = 0; j < 3; j++)
