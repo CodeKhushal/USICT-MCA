@@ -67,6 +67,11 @@ Node *createNode(int data)
     return newNode;
 }
 
+bool isTreeEmpty(Node *root)
+{
+    return (root == NULL);
+}
+
 Node *insert(Node *root, int data)
 {
     if (root == NULL)
@@ -103,7 +108,7 @@ void inorderTraversal(Node *root)
         int data = pop(s);
         cout << data << " ";
 
-        current = root;  // Reset root pointer to traverse right subtree
+        current = root; // Reset root pointer to traverse right subtree
         while (current != NULL && current->data != data)
         {
             if (data < current->data)
@@ -210,16 +215,31 @@ int main()
             root = insert(root, value);
             break;
         case 2:
+            if (isTreeEmpty(root))
+            {
+                cout << "\n\t[Tree is empty!]\n";
+                break;
+            }
             cout << "\n\tInorder Traversal: ";
             inorderTraversal(root);
             cout << endl;
             break;
         case 3:
+            if (isTreeEmpty(root))
+            {
+                cout << "\n\t[Tree is empty!]\n";
+                break;
+            }
             cout << "\n\tPreorder Traversal: ";
             preorderTraversal(root);
             cout << endl;
             break;
         case 4:
+            if (isTreeEmpty(root))
+            {
+                cout << "\n\t[Tree is empty!]\n";
+                break;
+            }
             cout << "\n\tPostorder Traversal: ";
             postorderTraversal(root);
             cout << endl;

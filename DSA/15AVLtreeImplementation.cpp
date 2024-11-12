@@ -12,7 +12,7 @@ struct Node
 
 Node *createNode(int data)
 {
-    Node *newNode = new Node;
+    Node *newNode = (struct Node *)malloc(sizeof(struct Node));
     newNode->data = data;
     newNode->height = 1;
     newNode->left = newNode->right = NULL;
@@ -27,6 +27,11 @@ int getHeight(Node *node)
 int getBalanceFactor(Node *node)
 {
     return (node == NULL) ? 0 : getHeight(node->left) - getHeight(node->right);
+}
+
+bool isTreeEmpty(Node *root)
+{
+    return (root == NULL);
 }
 
 Node *rotateRight(Node *y)
@@ -227,21 +232,41 @@ int main()
             root = insert(root, value);
             break;
         case 2:
+            if (isTreeEmpty(root))
+            {
+                cout << "\n\t[Tree is empty. Cannot delete a node from an empty tree!]\n";
+                break;
+            }
             cout << "Enter the value to delete: ";
             cin >> value;
             root = deleteNode(root, value);
             break;
         case 3:
+            if (isTreeEmpty(root))
+            {
+                cout << "\n\t[Tree is empty!]\n";
+                break;
+            }
             cout << "Inorder Traversal: ";
             inorderTraversal(root);
             cout << endl;
             break;
         case 4:
+            if (isTreeEmpty(root))
+            {
+                cout << "\n\t[Tree is empty!]\n";
+                break;
+            }
             cout << "Preorder Traversal: ";
             preorderTraversal(root);
             cout << endl;
             break;
         case 5:
+            if (isTreeEmpty(root))
+            {
+                cout << "\n\t[Tree is empty!]\n";
+                break;
+            }
             cout << "Postorder Traversal: ";
             postorderTraversal(root);
             cout << endl;

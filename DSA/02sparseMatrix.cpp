@@ -9,7 +9,7 @@ int main()
 
     cout << "Enter the number of rows you want in your matrix: ";
     cin >> mr;
-    cout << "Enter the number of rows you want in your matrix: ";
+    cout << "Enter the number of columns you want in your matrix: ";
     cin >> mc;
 
     for (int i = 0; i < mr; i++)
@@ -60,7 +60,7 @@ int main()
     }
     
     cout << "\nSparse Matrix is:\n";
-    for (int i = 0; i < sr; i++)
+    for (int i = 0; i <= sr; i++)
     {
         for (int j = 0; j < 3; j++)
         {

@@ -7,8 +7,8 @@
 #include <conio.h>
 using namespace std;
 using namespace std::this_thread;     // sleep_for, sleep_until
-using namespace std::chrono_literals; // ns, us, ms, s, h, etc.
-using std::chrono::system_clock;
+// using namespace std::chrono_literals; // ns, us, ms, s, h, etc.
+// using std::chrono::system_clock;
 
 int aSize = 0;
 
@@ -167,12 +167,12 @@ int main()
     }
 
     cout << "Array created successfully.\n";
-    cout << "Loading.......";
+    // cout << "Loading.......";
 
-    sleep_for(4ns);
-    sleep_until(system_clock::now() + 3s);
+    // sleep_for(4ns);
+    // sleep_until(system_clock::now() + 3s);
 
-    system("cls");
+    // system("cls");
     int option = 0;
     int subOption = 0;
 
