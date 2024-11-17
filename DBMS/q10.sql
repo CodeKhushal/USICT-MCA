@@ -1,3 +1,5 @@
+-- Procedure to Check if a Student is in a Specific Department
+
 -- IF
 DELIMITER $$
 CREATE PROCEDURE CheckStudentDepartment(IN stud_id INT, IN dept_name VARCHAR(100))

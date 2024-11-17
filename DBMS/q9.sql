@@ -1,3 +1,5 @@
+-- This trigger prevents any update to a faculty member's salary if the new salary is less than the current salary
+
 DELIMITER //
 
 CREATE TRIGGER before_faculty_salary_update

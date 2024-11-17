@@ -1,8 +1,17 @@
 -- IN
-
+-- Find the names of all students who belong to departments with more than 2 courses.
+SELECT f_name, l_name 
+FROM Student
+WHERE dept_id IN (
+  SELECT dept_id 
+  FROM Course
+  GROUP BY dept_idHAVIING COUNT(course_id) > 2
+);
 
 -- NOT IN
-SELECT f_name, l_name FROM Faculty
+-- Find the names of all faculty members who are not teaching in the department of a specific course, say 'Object Oriented Programming'.
+SELECT f_name, l_name 
+FROM Faculty
 WHERE dept_id NOT IN (
   SELECT dept_id FROM Course
   WHERE course_name = 'Object Oriented Programming'
@@ -10,6 +19,7 @@ WHERE dept_id NOT IN (
 
 
 -- ANY
+-- Find the names of all faculty members whose salary is greater than that of any faculty member in the 'Computer Science Engineering' department.
 SELECT f_name, l_name
 FROM Faculty
 WHERE salary > ANY (
@@ -23,6 +33,7 @@ WHERE salary > ANY (
 );
 
 -- ALL
+-- Find Students Older Than All Students in the "Master of Computer Application" Department.
 SELECT stud_id, f_name, l_name, date_of_birth, dept_id
 FROM Student AS S1
 WHERE date_of_birth < ALL (
