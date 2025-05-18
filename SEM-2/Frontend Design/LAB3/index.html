@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Change Background</title>
+</head>
+<body>
+    <button id="change-bg-button" style="position: absolute; top: 50%; right: 45%;">Change Background Color</button>
+    <script>
+        document.getElementById('change-bg-button').addEventListener('click', function() {
+            let colors = ["#f8b400", "#ff6b6b", "#6a0572", "#4caf50", "#3498db"];
+            document.body.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        });
+    </script>
+</body>
+</html>

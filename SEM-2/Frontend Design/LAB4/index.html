@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Product Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 30px;
+            background-color: #f4f4f9;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        table {
+            width: 80%;
+            margin: 0 auto;
+            border-collapse: collapse;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            background-color: #ffffff;
+        }
+
+        th,
+        td {
+            padding: 12px 20px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #28a745;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #d4edda;
+
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>Products Available</h2>
+    <table id="productTable">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Category</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <script>
+        const products = [
+            { name: "Smartphone", price: 25000, category: "Electronics" },
+            { name: "Headphones", price: 3000, category: "Audio" },
+            { name: "Sports Watch", price: 8000, category: "Wearables" },
+            { name: "Backpack", price: 2000, category: "Accessories" },
+            { name: "Pen", price: 100, category: "Stationery" }
+        ];
+
+        const tableBody = document.querySelector('#productTable tbody');
+
+        products.forEach(product => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${product.name}</td>
+                <td>${product.price.toFixed(2)}</td>
+                <td>${product.category}</td>
+            `;
+            tableBody.appendChild(row);
+        });
+    </script>
+
+</body>
+
+</html>
